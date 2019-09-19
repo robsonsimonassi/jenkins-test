@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment {
-	    registry = "172.31.30.19:8083/ubuntu:latest"
+	    registry = "ubuntu:latest"
 	    registryCredential = 'nexus-docker-user'
 	    dockerImage = ''
 	  }
@@ -20,24 +20,15 @@ pipeline {
         }
         stage('Docker Build') {
             steps {
-		        sh 'docker build -t 172.31.30.19:8083/ubuntu:latest .'
+		        sh 'docker build -t ubuntu:latest .'
 		      }
         }
         stage('Docker Push') {
             steps {
-                withDockerRegistry([ credentialsId: "nexus-docker-user", url: "http://172.31.30.19:8083" ]) {
-		          sh 'docker push 172.31.30.19:8083/ubuntu:latest'
+                withDockerRegistry([ credentialsId: "nexus-docker-user", url: "" ]) {
+		          sh 'docker push ubuntu:latest'
 		        }
             }
         }
-        stage('Deploy approval'){
-		    input "Deploy to prod?"
-		}
     }
-    
-    node {
-	    stage('deploy to prod'){
-	        echo "deploying"
-	    }
-	}
 }
