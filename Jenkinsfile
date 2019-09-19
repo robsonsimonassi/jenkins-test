@@ -3,6 +3,8 @@ pipeline {
     
     environment {
 	    registry = "nexus:8083/ubuntu"
+	    registryCredential = 'nexus-docker-user'
+	    dockerImage = ''
 	  }
  
     options {
@@ -19,16 +21,16 @@ pipeline {
         stage('Docker Build') {
             steps {
                 script {
-		          docker.build registry + ":$BUILD_NUMBER"
+		         dockerImage = docker.build registry + ":$BUILD_NUMBER"
 		        }
             }
         }
         stage('Docker Push') {
-            steps {
-                script {
-		          docker.push registry + ":$BUILD_NUMBER"
-		        }
-            }
+            script {
+	          docker.withRegistry( '', registryCredential ) {
+	          	dockerImage.push()
+	          }
+	        }
         }
     }
 }
