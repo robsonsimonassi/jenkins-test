@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    
+    environment {
+	    registry = "nexus:8083/ubuntu"
+	  }
  
     options {
         skipDefaultCheckout(true)
@@ -14,14 +18,16 @@ pipeline {
         }
         stage('Docker Build') {
             steps {
-                echo '> Docker build image ...'
-                sh 'docker build -t rc-cicd.becommerce.com.br:8083/ubuntu:1.0.0 .'
+                script {
+		          docker.build registry + ":$BUILD_NUMBER"
+		        }
             }
         }
         stage('Docker Push') {
             steps {
-                echo '> Docker Push ...'
-                sh 'docker push rc-cicd.becommerce.com.br:8083/ubuntu:1.0.0'
+                script {
+		          docker.push registry + ":$BUILD_NUMBER"
+		        }
             }
         }
     }
