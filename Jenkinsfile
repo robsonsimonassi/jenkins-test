@@ -1,16 +1,6 @@
 pipeline {
     agent any
-    
-    environment {
-	    registry = "${REGISTRY}/ubuntu:latest"
-	    registryCredential = 'nexus-docker-user'
-	    dockerImage = ''
-	  }
- 
-    options {
-        skipDefaultCheckout(true)
-    }
- 
+   
     stages {
         stage('Checkout SCM') {
             steps {
