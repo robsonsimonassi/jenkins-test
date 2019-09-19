@@ -15,13 +15,13 @@ pipeline {
         stage('Docker Build') {
             steps {
                 echo '> Docker build image ...'
-                sh 'docker build -t nexus:8083/ubuntu .'
+                sh 'docker build -t nexus:8083/ubuntu:1.0.0 .'
             }
         }
         stage('Docker Push') {
             steps {
                 echo '> Docker Push ...'
-                sh 'docker push nexus:8083/ubuntu'
+                sh 'docker push nexus:8083/ubuntu:1.0.0'
             }
         }
     }
