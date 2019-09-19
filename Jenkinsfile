@@ -25,8 +25,10 @@ pipeline {
         }
         stage('Docker Push') {
             steps {
-                sh 'docker push 172.31.30.19:8083/ubuntu:latest'
-		    }
+                withDockerRegistry([ credentialsId: "nexus-docker-user", url: "http://172.31.30.19:8083" ]) {
+		          sh 'docker push 172.31.30.19:8083/ubuntu:latest'
+		        }
+            }
         }
     }
 }
