@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment {
-	    registry = "nexus:8083/ubuntu"
+	    registry = "nexus:8083/ubuntu:latest"
 	    registryCredential = 'nexus-docker-user'
 	    dockerImage = ''
 	  }
@@ -20,18 +20,14 @@ pipeline {
         }
         stage('Docker Build') {
             steps {
-                script {
-		         dockerImage = docker.build registry + ":$BUILD_NUMBER"
-		        }
-            }
+		        sh 'docker build -t nexus:8083/ubuntu:latest .'
+		      }
         }
         stage('Docker Push') {
             steps {
-                 script {
-			          docker.withRegistry( registry, registryCredential ) {
-			          	dockerImage.push()
-			          }
-			        }
+                withDockerRegistry([ credentialsId: "nexus-docker-user", url: "http://nexus:8083" ]) {
+		          sh 'docker push nexus:8083/ubuntu:latest'
+		        }
             }
         }
     }
