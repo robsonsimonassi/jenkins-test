@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment {
-	    registry = "nexus:8084/ubuntu:latest"
+	    registry = "172.31.30.19:8083/ubuntu:latest"
 	    registryCredential = 'nexus-docker-user'
 	    dockerImage = ''
 	  }
@@ -20,12 +20,12 @@ pipeline {
         }
         stage('Docker Build') {
             steps {
-		        sh 'docker build -t nexus:8084/ubuntu:latest .'
+		        sh 'docker build -t 172.31.30.19:8083/ubuntu:latest .'
 		      }
         }
         stage('Docker Push') {
             steps {
-                sh 'docker push nexus:8084/ubuntu:latest'
+                sh 'docker push 172.31.30.19:8083/ubuntu:latest'
 		    }
         }
     }
