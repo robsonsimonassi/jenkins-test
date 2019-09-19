@@ -28,7 +28,7 @@ pipeline {
         stage('Docker Push') {
             steps {
                  script {
-			          docker.withRegistry( '', registryCredential ) {
+			          docker.withRegistry( registry, registryCredential ) {
 			          	dockerImage.push()
 			          }
 			        }
