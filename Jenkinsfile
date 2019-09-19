@@ -26,11 +26,13 @@ pipeline {
             }
         }
         stage('Docker Push') {
-            script {
-	          docker.withRegistry( '', registryCredential ) {
-	          	dockerImage.push()
-	          }
-	        }
+            steps {
+                 script {
+			          docker.withRegistry( '', registryCredential ) {
+			          	dockerImage.push()
+			          }
+			        }
+            }
         }
     }
 }
