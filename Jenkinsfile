@@ -32,7 +32,7 @@ pipeline {
                 sh 'curl -u "${RANCHER_ACCESS_KEY}:${RANCHER_SECRET_KEY}" \
 					-X POST \
 					-H Content-Type: application/json \
-					-d '{
+					-d ''{
 							"inServiceUpgradeStrategy": {
 								"batchSize": 10,
 								"intervalMillis": 500,
@@ -40,7 +40,7 @@ pipeline {
 									"imageUuid": "docker:${REGISTRY_TAG}:$BUILD_NUMBER"
 								}
 							}
-					}' "https://${RANCHER_URL}/v2-beta/projects/${RANCHE_PROJECT_ID}/services/${RANCHER_SERVICE_ID}/?action=upgrade"'
+					}'' "https://${RANCHER_URL}/v2-beta/projects/${RANCHE_PROJECT_ID}/services/${RANCHER_SERVICE_ID}/?action=upgrade"'
             }
         }
     }
