@@ -35,6 +35,9 @@ pipeline {
 						-H 'Content-Type: application/json'  \
 						-d '{
 								"inServiceUpgradeStrategy": {
+									"accountId": "1a2604",
+									"currentScale": 1,
+									"stackId": "1st158",
 									"batchSize": 1,
 									"intervalMillis": 2000,
 									"launchConfig": {
