@@ -45,7 +45,7 @@ pipeline {
 									"batchSize": 1,
 									"finalScale": 1,
 									"intervalMillis": 2000,
-									"toServiceId": "reference[service]",
+									"toServiceId": "${RANCHER_SERVICE_ID}",
 									"updateLinks": false
 								}
 						}' "${RANCHER_URL}/v2-beta/projects/${RANCHE_PROJECT_ID}/services/${RANCHER_SERVICE_ID}/?action=upgrade" 
