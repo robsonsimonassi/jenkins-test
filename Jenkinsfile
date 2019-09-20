@@ -30,7 +30,7 @@ pipeline {
         stage('Deploy - Production') {
            steps {
                 sh """
-                	 curl -u '${RANCHER_ACCESS_KEY}:${RANCHER_SECRET_KEY}' \
+                	 curl -u "${RANCHER_ACCESS_KEY}:${RANCHER_SECRET_KEY}" \
 						-X POST \
 						-H 'Content-Type: application/json'  \
 						-d '{
