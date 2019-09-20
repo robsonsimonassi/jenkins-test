@@ -35,8 +35,6 @@ pipeline {
 						-H 'Content-Type: application/json'  \
 						-d '{
 								"inServiceUpgradeStrategy": {
-									"batchSize": 10,
-									"intervalMillis": 500,
 									"launchConfig": {
 										"imageUuid": "docker:${REGISTRY_TAG}:$BUILD_NUMBER"
 									}
@@ -44,9 +42,8 @@ pipeline {
 								"toServiceStrategy": {
 									"batchSize": 1,
 									"finalScale": 1,
-									"intervalMillis": 2000,
-									"toServiceId": "${RANCHER_SERVICE_ID}",
-									"updateLinks": false
+									"intervalMillis": 2000
+									
 								}
 						}' "${RANCHER_URL}/v2-beta/projects/${RANCHE_PROJECT_ID}/services/${RANCHER_SERVICE_ID}/?action=upgrade" 
 				   
