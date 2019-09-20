@@ -37,7 +37,7 @@ pipeline {
 								"inServiceUpgradeStrategy": {
 									"batchSize": 10,
 									"intervalMillis": 500,
-									launchConfig": {
+									"launchConfig": {
 										"imageUuid": "docker:${REGISTRY_TAG}:$BUILD_NUMBER"
 									}
 								}
