@@ -10,13 +10,13 @@ pipeline {
         }
         stage('Docker Build') {
             steps {
-		        sh 'docker build -t ${REGISTRY_TAG}:${BUILD_NUMBER} .'
+		        sh 'docker build -t ${REGISTRY_REPOSITORY}:${BUILD_NUMBER} .'
 		      }
         }
         stage('Docker Push') {
             steps {
                 withDockerRegistry([ credentialsId: "nexus-docker-user", url: "${REGISTRY_URL}" ]) {
-		          sh 'docker push ${REGISTRY_TAG}:${BUILD_NUMBER}'
+		          sh 'docker push ${REGISTRY_REPOSITORY}:${BUILD_NUMBER}'
 		        }
             }
         }
@@ -51,7 +51,7 @@ pipeline {
 							         "stdinOpen":true,
 							         "tty":true,
 							         "type":"launchConfig",
-							         "imageUuid":"docker:${REGISTRY_TAG}:${BUILD_NUMBER}"
+							         "imageUuid":"docker:${REGISTRY_REPOSITORY}:${BUILD_NUMBER}"
 							      }
 							   },
 							   "toServiceStrategy":null
