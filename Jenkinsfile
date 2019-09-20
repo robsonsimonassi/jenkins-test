@@ -46,7 +46,6 @@ pipeline {
 									"batchSize": 1,
 									"finalScale": 1,
 									"intervalMillis": 2000,
-									"toServiceId": null,
 									"updateLinks": false
 									
 								}
