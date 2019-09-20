@@ -28,30 +28,24 @@ pipeline {
         }
 
         stage('Deploy - Production') {
-            steps {
-                sh (
-				    script: """
-				      curl -0 -X POST "${SLACK_WEBHOOK_URL}" \
-				      -H "Expect:" \
-				      -H 'Content-Type: text/json; charset=utf-8' \
-				      -d @- << EOF
-				      {
-				        "attachments": [
-				          {
-				            "color": "${status}",
-				            "title": "${title}",
-				            "title_link": "${title_link}",
-				            "text": "${message}\\nBuild: ${env.BUILD_URL}"
-				          }
-				        ]
-				      }
-				      EOF
-				      """
-				  )
-        }
-        
-        
+           steps {
+                sh """
+                	 curl -u '${RANCHER_ACCESS_KEY}:${RANCHER_SECRET_KEY}' \
+						-X POST \
+						-H 'Content-Type: application/json'  \
+						-d '{
+								"inServiceUpgradeStrategy": {
+									"batchSize": 10,
+									"intervalMillis": 500,
+									launchConfig": {
+										"imageUuid": "docker:${REGISTRY_TAG}:$BUILD_NUMBER"
+									}
+								}'
+						} "https://${RANCHER_URL}/v2-beta/projects/${RANCHE_PROJECT_ID}/services/${RANCHER_SERVICE_ID}/?action=upgrade" 
+				   
+				   """
+            }
+        }	
+    
     }
 }
-
-
