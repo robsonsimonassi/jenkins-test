@@ -35,14 +35,20 @@ pipeline {
 						-H 'Content-Type: application/json'  \
 						-d '{
 								"inServiceUpgradeStrategy": {
+									"batchSize": 1,
+									"intervalMillis": 2000,
 									"launchConfig": {
-										"imageUuid": "docker:${REGISTRY_TAG}:$BUILD_NUMBER"
-									}
+										"imageUuid": "docker:${REGISTRY_TAG}:$BUILD_NUMBER",
+									},
+									"startFirst": false
 								},
 								"toServiceStrategy": {
+									"type": "toServiceUpgradeStrategy",
 									"batchSize": 1,
 									"finalScale": 1,
-									"intervalMillis": 2000
+									"intervalMillis": 2000,
+									"toServiceId": null,
+									"updateLinks": false
 									
 								}
 						}' "${RANCHER_URL}/v2-beta/projects/${RANCHE_PROJECT_ID}/services/${RANCHER_SERVICE_ID}/?action=upgrade" 
