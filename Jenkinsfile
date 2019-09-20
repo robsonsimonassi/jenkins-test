@@ -44,6 +44,7 @@ pipeline {
 						} EOF "https://${RANCHER_URL}/v2-beta/projects/${RANCHE_PROJECT_ID}/services/${RANCHER_SERVICE_ID}/?action=upgrade" """
             }
         }
+        
     }
 }
 
