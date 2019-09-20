@@ -50,9 +50,8 @@ pipeline {
 							         "startOnCreate":true,
 							         "stdinOpen":true,
 							         "tty":true,
-							         "vcpu":1,
 							         "type":"launchConfig",
-							         "imageUuid":"docker:${REGISTRY_TAG}:$BUILD_NUMBER"
+							         "imageUuid":"docker:${REGISTRY_TAG}:${BUILD_NUMBER}"
 							      }
 							   },
 							   "toServiceStrategy":null
