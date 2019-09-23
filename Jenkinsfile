@@ -1,5 +1,14 @@
 pipeline {
     agent any
+    
+    environment {
+        RANCHER_NEW_IMAGE = '${REGISTRY_REPOSITORY}:${BUILD_NUMBER}'
+        RANCHER_URL = 'http://'
+		RANCHER_ACCESS_KEY = 'key' 
+		RANCHER_SECRET_KEY = 'secret'
+		RANCHER_ENVIRONMENT= 'envId'
+		RANCHER_SERVICE_ID = 'serviceId'
+    }
    
     stages {
         stage('Checkout SCM') {
@@ -10,23 +19,17 @@ pipeline {
         }
         stage('Docker Build') {
             steps {
-		        sh 'docker build -t ${REGISTRY_REPOSITORY}:${BUILD_NUMBER} .'
+		        sh 'docker build -t ${RANCHER_NEW_IMAGE} .'
 		      }
         }
         stage('Docker Push') {
             steps {
                 withDockerRegistry([ credentialsId: "nexus-docker-user", url: "${REGISTRY_URL}" ]) {
-		          sh 'docker push ${REGISTRY_REPOSITORY}:${BUILD_NUMBER}'
+		          sh 'docker push ${RANCHER_NEW_IMAGE}'
 		        }
             }
         }
-        
-         stage('Sanity check') {
-            steps {
-                input "Does the staging environment look ok?"
-            }
-        }
-
+     
         stage('Deploy - Production') {
            steps {
                 sh 'export RANCHER_NEW_IMAGE=${REGISTRY_REPOSITORY}:${BUILD_NUMBER}'

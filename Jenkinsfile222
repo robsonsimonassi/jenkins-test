@@ -34,6 +34,14 @@ pipeline {
 }
 
 
+
+ stage('Sanity check') {
+            steps {
+                input "Does the staging environment look ok?"
+            }
+        }
+
+
  steps {
                 sh
                 	 """curl -u "${RANCHER_ACCESS_KEY}:${RANCHER_SECRET_KEY}" \
