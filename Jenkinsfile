@@ -41,7 +41,13 @@ pipeline {
 		        }
             }
         }
-     
+        
+        stage('Deploy check') {
+            steps {
+                input "Deploy to 'PRODUCTION' ok?"
+            }
+        }
+        
         stage('Deploy - Production') {
            steps {
             	sh 'python /scripts/rancher-upgrade.py'
