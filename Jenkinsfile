@@ -9,10 +9,7 @@ pipeline {
 						  		}
 						  	""".trim()
  
-        RANCHER_URL = 'http://'
-		RANCHER_ACCESS_KEY = 'key' 
-		RANCHER_SECRET_KEY = 'secret'
-		RANCHER_ENVIRONMENT= 'envId'
+        RANCHER_ENVIRONMENT= 'envId'
 		RANCHER_SERVICE_ID = 'serviceId'
     }
    
@@ -38,7 +35,13 @@ pipeline {
      
         stage('Deploy - Production') {
            steps {
-            	sh 'python /scripts/rancher-upgrade.py'
+            	sh '
+            	
+            	
+            		python /scripts/rancher-upgrade.py
+            	
+            	
+            	'
             }
         }	
     
