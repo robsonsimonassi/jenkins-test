@@ -34,13 +34,7 @@ pipeline {
      
         stage('Deploy - Production') {
            steps {
-            	sh '
-            	
-            	
-            		python /scripts/rancher-upgrade.py
-            	
-            	
-            	'
+            	sh 'python /scripts/rancher-upgrade.py'
             }
         }	
     
