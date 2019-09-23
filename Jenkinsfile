@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment {
-        RANCHER_NEW_IMAGE = '$REGISTRY_REPOSITORY:$BUILD_NUMBER'
+        RANCHER_NEW_IMAGE = '${params.REGISTRY_REPOSITORY}:${params.BUILD_NUMBER}'
         RANCHER_URL = 'http://'
 		RANCHER_ACCESS_KEY = 'key' 
 		RANCHER_SECRET_KEY = 'secret'
@@ -32,8 +32,7 @@ pipeline {
      
         stage('Deploy - Production') {
            steps {
-                sh 'export RANCHER_NEW_IMAGE=${REGISTRY_REPOSITORY}:${BUILD_NUMBER}'
-				sh 'python /scripts/rancher-upgrade.py'
+            	sh 'python /scripts/rancher-upgrade.py'
             }
         }	
     
