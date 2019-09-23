@@ -1,0 +1,51 @@
+pipeline {
+    agent any
+    
+    environment {
+	    registry = "${REGISTRY}/ubuntu:latest"
+	    registryCredential = 'nexus-docker-user'
+	    dockerImage = ''
+	  }
+ 
+    options {
+        skipDefaultCheckout(true)
+    }
+ 
+    stages {
+        stage('Checkout SCM') {
+            steps {
+                echo '> Checking out the source control ...'
+                checkout scm
+            }
+        }
+        stage('Docker Build') {
+            steps {
+		        sh 'docker build -t ${REGISTRY}/ubuntu:latest .'
+		      }
+        }
+        stage('Docker Push') {
+            steps {
+                withDockerRegistry([ credentialsId: "nexus-docker-user", url: "http://${REGISTRY}" ]) {
+		          sh 'docker push ${REGISTRY}/ubuntu:latest'
+		        }
+            }
+        }
+    }
+}
+
+
+ steps {
+                sh
+                	 """curl -u "${RANCHER_ACCESS_KEY}:${RANCHER_SECRET_KEY}" \
+						-X POST \
+						-H 'Content-Type: application/json'  \
+						-d @- << EOF {
+								"inServiceUpgradeStrategy": {
+									"batchSize": 10,
+									"intervalMillis": 500,
+									launchConfig": {
+										"imageUuid": "docker:${REGISTRY_TAG}:$BUILD_NUMBER"
+									}
+								}
+						} EOF "https://${RANCHER_URL}/v2-beta/projects/${RANCHE_PROJECT_ID}/services/${RANCHER_SERVICE_ID}/?action=upgrade" """
+            }

@@ -29,36 +29,8 @@ pipeline {
 
         stage('Deploy - Production') {
            steps {
-                sh """
-                	 curl -u "${RANCHER_ACCESS_KEY}:${RANCHER_SECRET_KEY}" \
-						-X POST \
-						-H 'Content-Type: application/json'  \
-						-d '{
-							   "inServiceStrategy":{
-							      "batchSize":1,
-							      "intervalMillis":2000,
-							      "startFirst":false,
-							      "type":"inServiceUpgradeStrategy",
-							      "launchConfig":{
-							         "instanceTriggeredStop":"stop",
-							         "kind":"container",
-							         "networkMode":"managed",
-							         "privileged":false,
-							         "publishAllPorts":false,
-							         "readOnly":false,
-							         "runInit":false,
-							         "startOnCreate":true,
-							         "stdinOpen":true,
-							         "tty":true,
-							         "type":"launchConfig",
-							         "imageUuid":"docker:${REGISTRY_REPOSITORY}:${BUILD_NUMBER}"
-							      }
-							   },
-							   "toServiceStrategy":null
-							}' \
-						"${RANCHER_URL}/v2-beta/projects/${RANCHE_PROJECT_ID}/services/${RANCHER_SERVICE_ID}/?action=upgrade" 
-				   
-				   """
+                sh 'export RANCHER_NEW_IMAGE=${REGISTRY_REPOSITORY}:${BUILD_NUMBER}'
+				sh 'python upgrade.py'
             }
         }	
     
