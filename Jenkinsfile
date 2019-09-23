@@ -2,7 +2,13 @@ pipeline {
     agent any
     
     environment {
-        RANCHER_NEW_IMAGE = '${params.REGISTRY_REPOSITORY}:${params.BUILD_NUMBER}'
+        RANCHER_NEW_IMAGE = """
+								${ sh(   returnStdout: true,
+						    			 script: 'echo $REGISTRY_REPOSITOR:$BUILD_NUMBER'
+						  			)
+						  		}
+						  	""".trim()
+ 
         RANCHER_URL = 'http://'
 		RANCHER_ACCESS_KEY = 'key' 
 		RANCHER_SECRET_KEY = 'secret'
