@@ -8,8 +8,18 @@ pipeline {
 						  			)
 						  		}
 						  	""".trim()
- 		RANCHER_ENVIRONMENT= 'envId'
-		RANCHER_SERVICE_ID = 'serviceId'
+ 		RANCHER_ENVIRONMENT="""
+								${ sh(   returnStdout: true,
+						    			 script: 'echo $RANCHER_ENVIRONMENT'
+						  			)
+						  		}
+						  	""".trim()
+		RANCHER_SERVICE_ID ="""
+								${ sh(   returnStdout: true,
+						    			 script: 'echo $RANCHER_SERVICE_ID'
+						  			)
+						  		}
+						  	""".trim()
     }
    
     stages {
