@@ -8,8 +8,7 @@ pipeline {
 						  			)
 						  		}
 						  	""".trim()
- 
-        RANCHER_ENVIRONMENT= 'envId'
+ 		RANCHER_ENVIRONMENT= 'envId'
 		RANCHER_SERVICE_ID = 'serviceId'
     }
    
