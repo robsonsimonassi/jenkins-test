@@ -4,7 +4,7 @@ pipeline {
     environment {
         RANCHER_NEW_IMAGE = """
 								${ sh(   returnStdout: true,
-						    			 script: 'echo $REGISTRY_REPOSITOR:$BUILD_NUMBER'
+						    			 script: 'echo $REGISTRY_REPOSITORY:$BUILD_NUMBER'
 						  			)
 						  		}
 						  	""".trim()
