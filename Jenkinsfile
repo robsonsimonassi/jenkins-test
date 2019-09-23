@@ -30,7 +30,7 @@ pipeline {
         stage('Deploy - Production') {
            steps {
                 sh 'export RANCHER_NEW_IMAGE=${REGISTRY_REPOSITORY}:${BUILD_NUMBER}'
-				sh 'python rancher-upgrade.py'
+				sh 'python /scripts/rancher-upgrade.py'
             }
         }	
     
